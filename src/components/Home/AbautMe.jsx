@@ -6,7 +6,7 @@ const AboutMe = () => {
   const [activeTab, setActiveTab] = useState("about");
 
   return (
-    <section className="py-12 px-6 sm:px-6 lg:px-8 bg-gray-900 text-white">
+    <section id="about" className="py-12 px-6 sm:px-6 lg:px-8 bg-gray-900 text-white">
        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold py-6 mb-6 text-center">About Me </h1>
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         {/* Left - Image */}

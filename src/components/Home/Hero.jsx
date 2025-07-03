@@ -1,5 +1,5 @@
 import Asadul from "../../assets/Asadul.png";
-import baio from "../../assets/baio.pdf"; 
+import baio from "../../assets/baio.pdf"; //cv
 
 function Hero() {
   return (
@@ -37,11 +37,13 @@ function Hero() {
               <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded transition duration-300">
                 Hire Me
               </button>
-              <a href={baio} download>
+              <a href="add cv " download>
                 <button className="border border-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded transition duration-300">
                   Download CV
                 </button>
               </a>
+
+              
             </div>
           </div>
         </div>

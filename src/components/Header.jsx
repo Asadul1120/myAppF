@@ -22,6 +22,7 @@ const Header = () => {
             <li>
               <Link to="/" className="hover:text-blue-400">
                 Home
+                
               </Link>
             </li>
             <li>
@@ -61,12 +62,12 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link to="/about" onClick={toggleMobileMenu} className="hover:text-blue-400 border-b border-gray-600 block">
+              <Link to="#about" onClick={toggleMobileMenu} className="hover:text-blue-400 border-b border-gray-600 block">
                 About
               </Link>
             </li>
             <li>
-              <Link to="/contact" onClick={toggleMobileMenu} className="hover:text-blue-400 border-b border-gray-600 block ">
+              <Link to="#contact" onClick={toggleMobileMenu} className="hover:text-blue-400 border-b border-gray-600 block ">
                 Contact
               </Link>
             </li>

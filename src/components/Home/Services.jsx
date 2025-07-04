@@ -1,51 +1,71 @@
-
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Services() {
   const services = [
     {
-      title: "Web Design / App Design",
+      id: "app100",
+      title: "Custom Web Application Development",
       description:
-        "Creative, responsive, and modern UI/UX designs for websites and mobile applications.",
-      image: "https://via.placeholder.com/80",
+        "Build scalable and secure full-stack web applications using MongoDB, Express.js, React.js, and Node.js.",
+      image: "https://cdn-icons-png.flaticon.com/512/2721/2721293.png", // Web App
     },
     {
-      title: "Frontend Development",
+      id: "ui100",
+      title: "Responsive UI/UX Design",
       description:
-        "Building interactive, fast, and accessible user interfaces using React and modern tools.",
-      image: "https://via.placeholder.com/80",
+        "Design modern, mobile-first user interfaces using Tailwind CSS, Figma, and React component libraries.",
+      image: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", // UI/UX
     },
     {
-      title: "Backend API Integration",
+      id: "api100",
+      title: "RESTful API Development",
       description:
-        "Secure and scalable backend integration using Node.js, Express, and MongoDB.",
-      image: "https://via.placeholder.com/80",
+        "Create robust, efficient, and secure REST APIs with Express.js and Node.js for seamless frontend-backend communication.",
+      image: "https://cdn-icons-png.flaticon.com/512/595/595067.png", // API
     },
     {
-      title: "E-commerce Solutions",
+      id: "auth100",
+      title: "Authentication & Authorization",
       description:
-        "Designing and developing complete online store solutions with secure payment methods.",
-      image: "https://via.placeholder.com/80",
+        "Implement secure login systems with JWT, bcrypt, and role-based access control for users and admins.",
+      image: "https://cdn-icons-png.flaticon.com/512/2913/2913465.png", // Login
     },
     {
-      title: "SEO & Optimization",
+      id: "db100",
+      title: "MongoDB Database Integration",
       description:
-        "Improve your site ranking and speed with modern SEO and performance best practices.",
-      image: "https://via.placeholder.com/80",
+        "Design and manage NoSQL databases with MongoDB Atlas for highly available, scalable data storage.",
+      image: "https://cdn-icons-png.flaticon.com/512/5968/5968342.png", // MongoDB
     },
     {
-      title: "Maintenance & Support",
+      id: "mern100",
+      title: "E-commerce Development",
       description:
-        "Keep your site secure and up-to-date with regular support and maintenance services.",
-      image: "https://via.placeholder.com/80",
+        "Build complete MERN-based e-commerce platforms with cart system, payment gateway, admin dashboard, and product management.",
+      image: "https://cdn-icons-png.flaticon.com/512/4290/4290854.png", // E-commerce
     },
     {
-      title: "Responsive Design",
+      id: "deploy100",
+      title: "Deployment & CI/CD",
       description:
-        "Design and develop responsive layouts that adapt to different screen sizes and devices.",
-      image: "https://via.placeholder.com/80",
-    }
-
+        "Deploy MERN applications using platforms like Vercel, Render, or Heroku with GitHub CI/CD pipelines.",
+      image: "https://cdn-icons-png.flaticon.com/512/2721/2721290.png", // Deployment
+    },
+    {
+      id: "performance100",
+      title: "Performance Optimization",
+      description:
+        "Boost app performance through lazy loading, code splitting, database indexing, and caching strategies.",
+      image: "https://cdn-icons-png.flaticon.com/512/2436/2436635.png", // Speed
+    },
+    {
+      id: "support100",
+      title: "Ongoing Maintenance & Support",
+      description:
+        "Provide continuous support, bug fixes, and feature updates to ensure long-term project success.",
+      image: "https://cdn-icons-png.flaticon.com/512/1828/1828490.png", // Support
+    },
   ];
 
   const itemsPerPage = 3;
@@ -81,8 +101,32 @@ function Services() {
         </p>
       </div>
 
+      {/* Services Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {paginatedServices.map((service, index) => (
+          <div
+            key={index}
+            className="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:shadow-lg hover:shadow-blue-600/20 transition"
+          >
+            <img
+              src={service.image}
+              alt={service.title}
+              className="w-16 h-16 mb-4"
+            />
+            <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+            <p className="text-gray-400 mb-4">{service.description}</p>
+            <Link
+              to={`/services/${service.id}`}
+              className="text-blue-500 hover:underline"
+            >
+              Learn More
+            </Link>
+          </div>
+        ))}
+      </div>
+
       {/* Navigation Buttons */}
-      <div className="flex justify-end gap-4 mb-8">
+      <div className="flex justify-end gap-4 mt-8">
         <button
           onClick={handlePrev}
           disabled={startIndex === 0}
@@ -105,27 +149,6 @@ function Services() {
         >
           Next
         </button>
-      </div>
-
-      {/* Services Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {paginatedServices.map((service, index) => (
-          <div
-            key={index}
-            className="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:shadow-lg hover:shadow-blue-600/20 transition"
-          >
-            <img
-              src={service.image}
-              alt={service.title}
-              className="w-16 h-16 mb-4"
-            />
-            <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-            <p className="text-gray-400 mb-4">{service.description}</p>
-            <a href="#" className="text-blue-500 hover:underline">
-              Learn more
-            </a>
-          </div>
-        ))}
       </div>
     </div>
   );

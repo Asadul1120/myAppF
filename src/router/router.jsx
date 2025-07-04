@@ -3,6 +3,7 @@ import App from "../App";
 import HomePage from "../pages/HomePage";
 import NotFound from "../components/NotFound";
 import ServicesDetails from "../pages/ServicesDetails";
+import Contact from "../pages/Contact";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
         path: "/",
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
       {
         path: "/services/:id",

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 
 const Contact = () => {
@@ -25,13 +26,9 @@ const Contact = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-
-    
     try {
-      // Simulate form submission (replace with actual API call)
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Reset form on successful submission
       setFormData({
         name: "",
         email: "",
@@ -51,23 +48,21 @@ const Contact = () => {
   };
 
   return (
-    <div className="  px-4 sm:px-6 lg:px-8 py-8 md:py-12 bg-gray-900 min-h-screen">
-      <div className="text-center mb-8 md:mb-12">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-          Get in Touch
-        </h2>
-        <p className="text-gray-400 max-w-md mx-auto">
+    <div className="bg-gray-900 text-white p-6 sm:p-4 md:p-6 rounded-xl">
+      <div className="text-center mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold mb-1">Get in Touch</h2>
+        <p className="text-gray-400 text-sm sm:text-base">
           Have a question or want to work together? Fill out the form below.
         </p>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className=" mx-auto max-w-3xl  bg-gray-800 p-6 md:p-8 rounded-xl  flex  flex-col gap-6 shadow-lg border border-gray-700"
+        className="w-full max-w-3xl mx-auto bg-gray-800 p-4 sm:p-6 rounded-xl flex flex-col gap-4 shadow border border-gray-700"
       >
         {submitStatus && (
           <div
-            className={`p-3 rounded-lg ${
+            className={`p-3 rounded text-sm ${
               submitStatus.success
                 ? "bg-green-900/80 text-green-200"
                 : "bg-red-900/80 text-red-200"
@@ -77,9 +72,9 @@ const Contact = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex flex-col gap-1">
-            <label htmlFor="name" className="text-gray-300 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label htmlFor="name" className="text-sm text-gray-300">
               Name
             </label>
             <input
@@ -89,12 +84,12 @@ const Contact = () => {
               placeholder="Your Name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-600 placeholder-gray-400"
+              className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="text-gray-300 text-sm">
+          <div>
+            <label htmlFor="email" className="text-sm text-gray-300">
               Email
             </label>
             <input
@@ -104,14 +99,14 @@ const Contact = () => {
               placeholder="Your Email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-600 placeholder-gray-400"
+              className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor="subject" className="text-gray-300 text-sm">
+        <div>
+          <label htmlFor="subject" className="text-sm text-gray-300">
             Subject
           </label>
           <input
@@ -121,35 +116,35 @@ const Contact = () => {
             placeholder="Subject"
             value={formData.subject}
             onChange={handleChange}
-            className="p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-600 placeholder-gray-400"
+            className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor="message" className="text-gray-300 text-sm">
+        <div>
+          <label htmlFor="message" className="text-sm text-gray-300">
             Message
           </label>
           <textarea
             id="message"
             name="message"
+            rows="5"
             placeholder="Your message here..."
-            rows="6"
             value={formData.message}
             onChange={handleChange}
-            className="p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-600 placeholder-gray-400"
+            className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           ></textarea>
         </div>
 
-        <div className="flex items-start gap-3 text-sm">
+        <div className="flex items-start gap-2 text-sm">
           <input
             type="checkbox"
             id="agreeTerms"
             name="agreeTerms"
             checked={formData.agreeTerms}
             onChange={handleChange}
-            className="mt-1 w-4 h-4 accent-blue-500 rounded focus:ring-blue-500 border-gray-600"
+            className="mt-1 w-4 h-4 accent-blue-500"
             required
           />
           <label htmlFor="agreeTerms" className="text-gray-300">
@@ -160,14 +155,14 @@ const Contact = () => {
         <button
           type="submit"
           disabled={isSubmitting || !formData.agreeTerms}
-          className={`bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center ${
+          className={`bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-all duration-300 flex items-center justify-center ${
             isSubmitting || !formData.agreeTerms
               ? "opacity-50 cursor-not-allowed"
-              : "hover:shadow-lg hover:shadow-blue-500/20"
+              : "hover:shadow-md"
           }`}
         >
           {isSubmitting ? (
-            <span className="flex items-center justify-center gap-2">
+            <span className="flex items-center gap-2">
               <svg
                 className="animate-spin h-5 w-5 text-white"
                 xmlns="http://www.w3.org/2000/svg"
@@ -200,3 +195,4 @@ const Contact = () => {
 };
 
 export default Contact;
+

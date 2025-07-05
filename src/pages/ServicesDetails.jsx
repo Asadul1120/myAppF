@@ -1,7 +1,13 @@
 import { useParams, Link } from "react-router-dom";
+import { useState } from "react";
+import Contact from "./Contact";
 
 function ServicesDetails() {
   const { id } = useParams();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const Services = [
     {
@@ -172,13 +178,32 @@ function ServicesDetails() {
           </article>
 
           <div className="mt-12 text-center">
-            <Link
-              to="/contact"
-              className="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg transition duration-300"
+            <button
+              onClick={openModal}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow transition"
             >
               🚀 Get a Free Consultation
-            </Link>
+            </button>
           </div>
+
+          {isModalOpen && (
+            <div className="fixed inset-0 z-50  bg-opacity-60 flex items-center justify-center">
+              <div className="relative w-full max-w-3xl mx-4 sm:mx-auto">
+                {/* Close Button */}
+                <button
+                  onClick={closeModal}
+                  className="absolute top-4 right-4 text-white text-3xl font-bold hover:text-red-500 z-50"
+                >
+                  &times;
+                </button>
+
+                {/* Contact Form as Modal */}
+                <div className=" rounded-xl shadow-xl overflow-y-auto max-h-[90vh] border border-gray-700">
+                  <Contact />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

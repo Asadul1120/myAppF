@@ -16,10 +16,7 @@ const router = createBrowserRouter([
         index: true,
         element: <HomePage />,
       },
-      {
-        path: "/contact",
-        element: <Contact />,
-      },
+      
       {
         path: "/services/:id",
         element: <ServicesDetails />,

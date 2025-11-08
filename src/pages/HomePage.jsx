@@ -3,8 +3,15 @@ import Hero from "../components/Home/Hero";
 import OurProjects from "../components/Home/OurProjects";
 import Services from "../components/Home/Services";
 import SkallIcon from "../components/Home/SkallIcon";
+import { useAuth } from "../AuthContext";
 
 function HomePage() {
+
+  const { auth } = useAuth();
+  console.log(auth);
+
+  
+
     return (
         <>
           <Hero />

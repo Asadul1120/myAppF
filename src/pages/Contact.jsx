@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 const Contact = () => {
@@ -29,6 +28,16 @@ const Contact = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
+      await fetch(`${import.meta.env.VITE_API_URL}/user/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      console.log("Form Data:", formData);
+
       setFormData({
         name: "",
         email: "",
@@ -58,7 +67,7 @@ const Contact = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-3xl mx-auto bg-gray-800 p-4 sm:p-6 rounded-xl flex flex-col gap-4 shadow border border-gray-700"
+        className="w-full max-w-3xl mx-auto bg-gray-800 p-4 sm:p-6 rounded-xl flex flex-col gap-4 shadow "
       >
         {submitStatus && (
           <div
@@ -195,4 +204,3 @@ const Contact = () => {
 };
 
 export default Contact;
-

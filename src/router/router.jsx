@@ -3,7 +3,11 @@ import App from "../App";
 import HomePage from "../pages/HomePage";
 import NotFound from "../components/NotFound";
 import ServicesDetails from "../pages/ServicesDetails";
-import Contact from "../pages/Contact";
+import AdminChat from "../pages/AdminChat";
+import UserChat from "../pages/UserChat";
+import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -16,10 +20,31 @@ const router = createBrowserRouter([
         index: true,
         element: <HomePage />,
       },
-      
+      {
+        path: "/userchat",
+        element: (
+          <PrivateRoute>
+            <UserChat />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/adminchat",
+        element: <AdminChat />,
+    
+      },
       {
         path: "/services/:id",
         element: <ServicesDetails />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+        
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
       },
       {
         path: "*",
@@ -30,3 +55,5 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
+
+

@@ -1,5 +1,7 @@
+import { useState } from "react";
 import dev from "../assets/dev.avif";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faPhone,
   faEnvelope,
@@ -13,13 +15,56 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
+  const [status, setStatus] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const name = form.name.value;
+    const email = form.email.value;
+    const subject = form.subject.value;
+    const message = form.message.value;
+
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/message/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, subject, message }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setStatus("✅ Message sent successfully!");
+        form.reset();
+      } else {
+        setStatus("❌ Failed to send message.");
+      }
+    } catch (error) {
+      console.log(error);
+      setStatus("⚠️ Something went wrong.");
+    }
+
+    // Remove message after 5 seconds
+    setTimeout(() => setStatus(""), 5000);
+  };
+
   return (
     <footer className="bg-gray-800 text-white py-10 px-4">
       <h1 className="text-3xl md:text-4xl font-bold text-center mb-10">
         Contact Me
       </h1>
 
-      <div id="contact" className="container mx-auto flex flex-col md:flex-row justify-between items-stretch gap-8">
+      <div
+        id="contact"
+        className="container mx-auto flex flex-col md:flex-row justify-between items-stretch gap-8"
+      >
         {/* Contact Info Box */}
         <div className="flex-1 bg-gray-800 p-6 md:p-8 rounded-xl flex flex-col gap-6 items-center">
           <img
@@ -60,34 +105,43 @@ const Footer = () => {
 
         {/* Contact Form */}
         <form
-          action=""
+          onSubmit={handleSubmit}
           className="flex-1 bg-gray-800 p-6 md:p-8 rounded-xl flex flex-col gap-6"
         >
           <div className="flex flex-col md:flex-row gap-4">
             <input
               type="text"
+              name="name"
               placeholder="Your Name"
               className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none"
+              required
             />
             <input
               type="email"
+              name="email"
               placeholder="Your Email"
               className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none"
+              required
             />
           </div>
 
           <input
             type="text"
+            name="subject"
             placeholder="Subject"
             className="p-3 rounded-lg bg-gray-700 text-white focus:outline-none"
+            required
           />
           <textarea
+            name="message"
             placeholder="Message"
             rows="6"
             className="p-3 rounded-lg bg-gray-700 text-white focus:outline-none"
+            required
           ></textarea>
+
           <div className="flex items-start gap-2 text-sm">
-            <input type="checkbox" className="mt-1 w-4 h-4" />
+            <input type="checkbox" className="mt-1 w-4 h-4" required />
             <label>I agree to the terms and conditions</label>
           </div>
 
@@ -97,11 +151,14 @@ const Footer = () => {
           >
             Submit
           </button>
+
+          {/* Submission Status Message */}
+          {status && <p className="text-sm text-green-400">{status}</p>}
         </form>
       </div>
 
       {/* Footer Bottom Section */}
-      <div className="mt-20 border-t-3  border-gray-600 b pt-6  container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="mt-20 border-t-3 border-gray-600 pt-6 container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-center text-gray-400 text-xl">
           &copy; {new Date().getFullYear()} Asadul Islam. All rights reserved.
         </p>
@@ -127,7 +184,7 @@ const Footer = () => {
           >
             <FontAwesomeIcon
               icon={faTwitter}
-              className=" text-sky-400 hover:text-sky-600 transition duration-300"
+              className="text-sky-400 hover:text-sky-600 transition duration-300"
             />
           </a>
           <a
@@ -138,7 +195,7 @@ const Footer = () => {
           >
             <FontAwesomeIcon
               icon={faGithub}
-              className=" text-gray-300 hover:text-gray-500 transition duration-300"
+              className="text-gray-300 hover:text-gray-500 transition duration-300"
             />
           </a>
           <a
@@ -149,7 +206,7 @@ const Footer = () => {
           >
             <FontAwesomeIcon
               icon={faLinkedin}
-              className="  text-blue-500 hover:text-sky-600 transition duration-300"
+              className="text-blue-500 hover:text-sky-600 transition duration-300"
             />
           </a>
         </div>

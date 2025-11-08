@@ -1,13 +1,21 @@
-
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const { auth, setAuth } = useAuth();
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setAuth({ user: null, token: "" });
+    navigate("/login");
   };
 
   return (
@@ -22,7 +30,6 @@ const Header = () => {
             <li>
               <Link to="/" className="hover:text-blue-400">
                 Home
-                
               </Link>
             </li>
             <li>
@@ -30,14 +37,24 @@ const Header = () => {
                 About
               </Link>
             </li>
-            <li>
-              <Link to="/contact" className="hover:text-blue-400 mr-10">
-                Contact
-              </Link>
-            </li>
+            {auth.user ? (
+              <>
+                <li>
+                  <Link onClick={handleLogout} className="hover:text-blue-400">
+                    Logout
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <li>
+                <Link to="/login" className="hover:text-blue-400">
+                  Login
+                </Link>
+              </li>
+            )}
           </ul>
           <Link
-            to="/chat"
+            to="/userchat"
             className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4 py-1 md:px-6 md:py-2 text-sm md:text-base"
           >
             Let's chat
@@ -46,8 +63,11 @@ const Header = () => {
 
         {/* Mobile Nav Button */}
         <div className="md:hidden">
-          <button onClick={toggleMobileMenu} className="text-white text-2xl focus:outline-none">
-           { isMobileMenuOpen ? '✕' : '☰'}
+          <button
+            onClick={toggleMobileMenu}
+            className="text-white text-2xl focus:outline-none"
+          >
+            {isMobileMenuOpen ? "✕" : "☰"}
           </button>
         </div>
       </div>
@@ -57,23 +77,46 @@ const Header = () => {
         <div className="md:hidden bg-gray-800 px-6 md:px-8 pt-4 ">
           <ul className="flex flex-col gap-4 space-y-3 text-xl">
             <li>
-              <Link to="/" onClick={toggleMobileMenu} className="hover:text-blue-400  border-b border-gray-600 block">
+              <Link
+                to="/"
+                onClick={toggleMobileMenu}
+                className="hover:text-blue-400  border-b border-gray-600 block"
+              >
                 Home
               </Link>
             </li>
             <li>
-              <Link to="#about" onClick={toggleMobileMenu} className="hover:text-blue-400 border-b border-gray-600 block">
+              <Link
+                to="#about"
+                onClick={toggleMobileMenu}
+                className="hover:text-blue-400 border-b border-gray-600 block"
+              >
                 About
               </Link>
             </li>
-            <li>
-              <Link to="#contact" onClick={toggleMobileMenu} className="hover:text-blue-400 border-b border-gray-600 block ">
-                Contact
-              </Link>
-            </li>
+            {auth.user ? (
+              <li>
+                <Link
+                  onClick={handleLogout}
+                  className="hover:text-blue-400 border-b border-gray-600 block "
+                >
+                  Logout
+                </Link>
+              </li>
+            ) : (
+              <li>
+                <Link
+                  to="/login"
+                  onClick={toggleMobileMenu}
+                  className="hover:text-blue-400 border-b border-gray-600 block "
+                >
+                  Login
+                </Link>
+              </li>
+            )}
             <li>
               <Link
-                to="/chat"
+                to="/userchat"
                 onClick={toggleMobileMenu}
                 className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4 py-2 text-center block "
               >

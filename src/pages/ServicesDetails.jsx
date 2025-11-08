@@ -198,7 +198,7 @@ function ServicesDetails() {
                 </button>
 
                 {/* Contact Form as Modal */}
-                <div className=" rounded-xl shadow-xl overflow-y-auto max-h-[90vh] border border-gray-700">
+                <div className=" rounded-xl shadow-xl overflow-y-auto max-h-[90vh]">
                   <Contact />
                 </div>
               </div>

@@ -8,6 +8,8 @@ import UserChat from "../pages/UserChat";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import PrivateRoute from "./PrivateRoute";
+import Dashboard from "../pages/Dashboard";
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +33,6 @@ const router = createBrowserRouter([
       {
         path: "/adminchat",
         element: <AdminChat />,
-    
       },
       {
         path: "/services/:id",
@@ -40,7 +41,14 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
-        
+      },
+      {
+        path: "/dashboard",
+        element: (
+          <AdminRoute>
+            <Dashboard />
+          </AdminRoute>
+        ),
       },
       {
         path: "/signup",
@@ -55,5 +63,3 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
-
-

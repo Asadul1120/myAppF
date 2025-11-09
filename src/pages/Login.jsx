@@ -49,7 +49,8 @@ function Login() {
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", JSON.stringify(data.user)); // optional
           setAuth({ user: data.user, token: data.token });
-          navigate("/userchat");
+          navigate("/");
+          
         } else {
           setErrors({ general: data.message || "Login failed" });
         }

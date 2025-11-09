@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   const { auth, setAuth } = useAuth();
+  const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -37,6 +37,7 @@ const Header = () => {
                 About
               </Link>
             </li>
+
             {auth.user ? (
               <>
                 <li>
@@ -44,6 +45,16 @@ const Header = () => {
                     Logout
                   </Link>
                 </li>
+
+                {/* Only admin dashboard */}
+
+                {auth.user.role === "admin" && (
+                  <li>
+                    <Link to="/dashboard" className="hover:text-blue-400">
+                      Dashboard
+                    </Link>
+                  </li>
+                )}
               </>
             ) : (
               <li>
@@ -53,12 +64,16 @@ const Header = () => {
               </li>
             )}
           </ul>
-          <Link
-            to="/userchat"
-            className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4 py-1 md:px-6 md:py-2 text-sm md:text-base"
-          >
-            Let's chat
-          </Link>
+
+          {/* ✅ Show "Let's chat" only if user is not admin */}
+          {auth.user?.role !== "admin" && (
+            <Link
+              to="/userchat"
+              className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4 py-1 md:px-6 md:py-2 text-sm md:text-base"
+            >
+              Let's chat
+            </Link>
+          )}
         </nav>
 
         {/* Mobile Nav Button */}
@@ -80,7 +95,7 @@ const Header = () => {
               <Link
                 to="/"
                 onClick={toggleMobileMenu}
-                className="hover:text-blue-400  border-b border-gray-600 block"
+                className="hover:text-blue-400 border-b border-gray-600 block"
               >
                 Home
               </Link>
@@ -94,11 +109,15 @@ const Header = () => {
                 About
               </Link>
             </li>
+
             {auth.user ? (
               <li>
                 <Link
-                  onClick={handleLogout}
-                  className="hover:text-blue-400 border-b border-gray-600 block "
+                  onClick={() => {
+                    handleLogout();
+                    toggleMobileMenu();
+                  }}
+                  className="hover:text-blue-400 border-b border-gray-600 block"
                 >
                   Logout
                 </Link>
@@ -108,21 +127,37 @@ const Header = () => {
                 <Link
                   to="/login"
                   onClick={toggleMobileMenu}
-                  className="hover:text-blue-400 border-b border-gray-600 block "
+                  className="hover:text-blue-400 border-b border-gray-600 block"
                 >
                   Login
                 </Link>
               </li>
             )}
-            <li>
-              <Link
-                to="/userchat"
-                onClick={toggleMobileMenu}
-                className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4 py-2 text-center block "
-              >
-                Let's chat
-              </Link>
-            </li>
+
+            {auth.user?.role === "admin" && (
+              <li>
+                <Link
+                  to="/dashboard"
+                  onClick={toggleMobileMenu}
+                  className="hover:text-blue-400 border-b border-gray-600 block"
+                >
+                  Dashboard
+                </Link>
+              </li>
+            )}
+
+            {/* ✅ Show chat button for everyone except admin */}
+            {auth.user?.role !== "admin" && (
+              <li>
+                <Link
+                  to="/userchat"
+                  onClick={toggleMobileMenu}
+                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4 py-2 text-center block"
+                >
+                  Let's chat
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       )}

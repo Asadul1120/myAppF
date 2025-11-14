@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import Logo from "../assets/LOGO/Logo.png";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -22,7 +23,14 @@ const Header = () => {
     <header className="fixed top-0 left-0 w-full bg-gray-800 text-white shadow z-50 py-6">
       <div className="container mx-auto flex items-center justify-between px-6">
         {/* Logo */}
-        <h1 className="text-xl md:text-2xl font-bold">LOGO</h1>
+
+        <div className="flex items-center">
+          <img
+            src={Logo}
+            alt="logo"
+            className="h-16 rounded-full object-cover"
+          />
+        </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">

@@ -16,11 +16,8 @@ const Dashboard = () => {
   const [active, setActive] = useState("overview");
 
 
-
- 
-
   return (
-    <div className="min-h-screen flex bg-gray-900 text-gray-100">
+    <div className="min-h-screen flex bg-gray-900 text-gray-100 pt-36">
       {/* Sidebar */}
       <aside className="w-64 bg-gray-800 text-gray-200 flex flex-col justify-between border-r border-gray-700">
         <div>
@@ -32,14 +29,15 @@ const Dashboard = () => {
             {[
               { id: "overview", name: "Overview", icon: Home },
               { id: "projects", name: "Projects", icon: Folder },
-              { id: "messages", name: "Messages", icon: MessageCircle },
+              { id: "adminchat", name: "Messages", icon: MessageCircle },
               { id: "analytics", name: "Analytics", icon: BarChart2 },
               { id: "profile", name: "Profile", icon: User },
               { id: "settings", name: "Settings", icon: Settings },
             ].map(({ id, name, icon: Icon }) => (
-              <button
+              <Link
                 key={id}
                 onClick={() => setActive(id)}
+                to={`/${id}`}
                 className={`flex items-center w-full px-5 py-3 text-left transition ${
                   active === id
                     ? "bg-indigo-600 text-white"
@@ -47,7 +45,7 @@ const Dashboard = () => {
                 }`}
               >
                 <Icon className="mr-3" size={20} /> {name}
-              </button>
+              </Link>
             ))}
           </nav>
         </div>

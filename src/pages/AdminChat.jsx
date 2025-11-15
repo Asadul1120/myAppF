@@ -9,19 +9,18 @@ const AdminChat = () => {
   const [newMessage, setNewMessage] = useState("");
 
   const socket = useRef(null);
-  const selectedUserRef = useRef(null); // ✅ Track selected user in ref
+  const selectedUserRef = useRef(null);
 
-  // Keep selectedUserRef updated
+  // Keep selectedUser updated
   useEffect(() => {
     selectedUserRef.current = selectedUser;
   }, [selectedUser]);
 
-  // Initialize socket connection once
+  // Initialize socket
   useEffect(() => {
     socket.current = io(import.meta.env.VITE_API_URL);
 
     socket.current.on("receive_message", (msg) => {
-      // ✅ Always compare with updated selectedUser
       if (msg.userId === selectedUserRef.current?._id) {
         setMessages((prev) => [...prev, msg]);
       }
@@ -32,7 +31,7 @@ const AdminChat = () => {
     };
   }, []);
 
-  // Fetch all users once on load
+  // Fetch users
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -48,7 +47,7 @@ const AdminChat = () => {
     fetchUsers();
   }, []);
 
-  // Fetch messages for selected user
+  // Load messages for selected user
   useEffect(() => {
     if (!selectedUser) return;
 
@@ -67,28 +66,26 @@ const AdminChat = () => {
     fetchMessages();
   }, [selectedUser]);
 
+  // Send message
   const handleSend = async () => {
     if (!newMessage.trim()) return;
 
-    const newMsg = {
+    const msgData = {
       userId: selectedUser._id,
       sender: "admin",
       text: newMessage,
     };
 
     try {
-      // Save to DB
       await fetch(`${import.meta.env.VITE_API_URL}/userChat`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newMsg),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(msgData),
       });
 
-      // Emit via socket
-      socket.current.emit("send_message", newMsg);
-      setMessages((prev) => [...prev, newMsg]);
+      socket.current.emit("send_message", msgData);
+
+      setMessages((prev) => [...prev, msgData]);
       setNewMessage("");
     } catch (err) {
       console.error("Send failed", err);
@@ -97,26 +94,27 @@ const AdminChat = () => {
 
   if (!selectedUser) {
     return (
-      <div className="w-full h-screen flex items-center justify-center text-gray-500">
+      <div className="w-full h-screen flex items-center justify-center text-gray-400 bg-gray-900">
         Loading users...
       </div>
     );
   }
 
   return (
-    <div className="w-full h-screen flex bg-gray-100 py-25">
-      {/* Sidebar: User List */}
-      <div className="w-1/4 bg-white border-r shadow-sm p-4">
-        <h2 className="text-xl font-bold mb-4">Users</h2>
-        <ul className="space-y-2 overflow-y-auto max-h-[80vh]">
+    <div className="w-full h-screen flex bg-gray-900 pt-24">
+      {/* Sidebar */}
+      <div className="w-1/4 bg-gray-800 border-r border-gray-700 p-4 shadow-xl">
+        <h2 className="text-gray-200 text-xl font-semibold mb-4">Users</h2>
+
+        <ul className="space-y-2 overflow-y-auto max-h-[80vh] pr-2 custom-scrollbar">
           {users.map((user) => (
             <li
               key={user._id}
               onClick={() => setSelectedUser(user)}
-              className={`p-2 rounded cursor-pointer hover:bg-gray-200 ${
+              className={`p-3 rounded-lg cursor-pointer transition border border-transparent ${
                 selectedUser._id === user._id
-                  ? "bg-blue-100 font-semibold"
-                  : ""
+                  ? "bg-blue-600 text-white border-blue-400"
+                  : "bg-gray-700 text-gray-200 hover:bg-gray-600"
               }`}
             >
               {user.name}
@@ -126,12 +124,14 @@ const AdminChat = () => {
       </div>
 
       {/* Chat Area */}
-      <div className="w-3/4 flex flex-col">
-        <div className="bg-blue-600 text-white p-4 font-bold">
-          Chat with {selectedUser.name}
+      <div className="w-3/4 flex flex-col bg-gray-900">
+        {/* Header */}
+        <div className="bg-gray-800 text-gray-200 p-4 border-b border-gray-700 text-lg font-semibold shadow-md">
+          💬 Chat with {selectedUser.name}
         </div>
 
-        <div className="flex-1 p-4 space-y-4 overflow-y-auto">
+        {/* Messages */}
+        <div className="flex-1 p-5 space-y-4 overflow-y-auto">
           {messages.map((msg, i) => (
             <div
               key={i}
@@ -140,10 +140,10 @@ const AdminChat = () => {
               }`}
             >
               <div
-                className={`px-4 py-2 rounded-lg max-w-xs ${
+                className={`px-4 py-2 max-w-xs rounded-xl shadow ${
                   msg.sender === "admin"
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-300 text-black"
+                    ? "bg-blue-600 text-white rounded-br-none"
+                    : "bg-gray-700 text-gray-200 rounded-bl-none"
                 }`}
               >
                 {msg.text}
@@ -152,18 +152,20 @@ const AdminChat = () => {
           ))}
         </div>
 
-        <div className="p-4 border-t bg-white flex items-center gap-2">
+        {/* Input */}
+        <div className="p-4 bg-gray-800 border-t border-gray-700 flex items-center gap-3">
           <input
             type="text"
-            placeholder="Type your message..."
+            placeholder="Type a message..."
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            className="flex-1 border border-gray-300 rounded-lg p-2 focus:outline-none"
+            className="flex-1 bg-gray-700 text-gray-200 placeholder-gray-400 border border-gray-600 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+
           <button
             onClick={handleSend}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow transition"
           >
             Send
           </button>

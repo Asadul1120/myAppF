@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import { toast } from "react-toastify";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -8,7 +9,7 @@ function Login() {
     password: "",
   });
 
-  const { auth, setAuth } = useAuth();
+  const { setAuth } = useAuth();
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -27,55 +28,59 @@ function Login() {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-    } else {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/user/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-          }
-        );
+      return;
+    }
 
-        const data = await response.json();
+    try {
+      setLoading(true);
 
-        if (response.ok && data.token) {
-          alert("Login successful!");
-          console.log(data);
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("user", JSON.stringify(data.user)); // optional
-          setAuth({ user: data.user, token: data.token });
-          navigate("/");
-          
-        } else {
-          setErrors({ general: data.message || "Login failed" });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/user/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
         }
-      } catch (error) {
-        console.error("Error:", error);
-        setErrors({ general: "Something went wrong. Try again later." });
-      } finally {
-        setLoading(false);
+      );
+
+      const data = await response.json();
+
+      if (response.ok && data.token) {
+        toast.success("Login successful!");
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        setAuth({ user: data.user, token: data.token });
+
+        navigate("/");
+      } else {
+        toast.error(data.message || "Invalid email or password");
       }
+    } catch (error) {
+      toast.error("Something went wrong. Try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 pt-33 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 pt-33 pb-10 px-4">
       <form
         onSubmit={handleSubmit}
         className="bg-gray-800 text-white p-8 rounded-2xl shadow-lg w-full max-w-md"
       >
         <h2 className="text-3xl font-bold text-center mb-6">Login</h2>
 
+        {/* Email */}
         <div className="mb-4">
           <label className="block mb-1 text-sm font-medium">Email</label>
           <input
             type="email"
             name="email"
+            autoComplete="email"
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email"
@@ -86,11 +91,13 @@ function Login() {
           )}
         </div>
 
+        {/* Password */}
         <div className="mb-6">
           <label className="block mb-1 text-sm font-medium">Password</label>
           <input
             type="password"
             name="password"
+            autoComplete="current-password"
             value={formData.password}
             onChange={handleChange}
             placeholder="Enter your password"
@@ -100,12 +107,6 @@ function Login() {
             <p className="text-red-400 text-sm mt-1">{errors.password}</p>
           )}
         </div>
-
-        {errors.general && (
-          <p className="text-red-400 text-sm mb-4 text-center">
-            {errors.general}
-          </p>
-        )}
 
         <button
           type="submit"

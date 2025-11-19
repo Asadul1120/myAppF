@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -10,12 +11,13 @@ function SignUp() {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,87 +32,98 @@ function SignUp() {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-    } else {
-      // Send formData to backend here
-      await fetch(`${import.meta.env.VITE_API_URL}/user/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          alert("Registration successful!");
-          navigate("/login");
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      return;
+    }
 
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
-      setErrors({});
+    try {
+      setLoading(true);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/user/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success("Registration successful!");
+        navigate("/login");
+      } else {
+        toast.error(data.message || "Registration failed");
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 pt-33 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 pt-33 pb-10 px-4">
       <form
         onSubmit={handleSubmit}
         className="bg-gray-800 text-white p-8 rounded-2xl shadow-lg w-full max-w-md"
       >
         <h2 className="text-3xl font-bold text-center mb-6">Sign Up</h2>
 
+        {/* Name */}
         <div className="mb-4">
           <label className="block mb-1 text-sm font-medium">Name</label>
           <input
             type="text"
             name="name"
+            autoComplete="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter your name"
+            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {errors.name && (
             <p className="text-red-400 text-sm mt-1">{errors.name}</p>
           )}
         </div>
 
+        {/* Email */}
         <div className="mb-4">
           <label className="block mb-1 text-sm font-medium">Email</label>
           <input
             type="email"
             name="email"
+            autoComplete="email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter your email"
+            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {errors.email && (
             <p className="text-red-400 text-sm mt-1">{errors.email}</p>
           )}
         </div>
 
+        {/* Password */}
         <div className="mb-4">
           <label className="block mb-1 text-sm font-medium">Password</label>
           <input
             type="password"
             name="password"
+            autoComplete="new-password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter password"
+            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {errors.password && (
             <p className="text-red-400 text-sm mt-1">{errors.password}</p>
           )}
         </div>
 
+        {/* Confirm Password */}
         <div className="mb-6">
           <label className="block mb-1 text-sm font-medium">
             Confirm Password
@@ -118,10 +131,11 @@ function SignUp() {
           <input
             type="password"
             name="confirmPassword"
+            autoComplete="new-password"
             value={formData.confirmPassword}
             onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Re-enter password"
+            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {errors.confirmPassword && (
             <p className="text-red-400 text-sm mt-1">
@@ -130,17 +144,24 @@ function SignUp() {
           )}
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition duration-300"
+          disabled={loading}
+          className={`w-full ${
+            loading
+              ? "bg-blue-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
+          } text-white py-2 rounded-lg font-semibold transition duration-300`}
         >
-          Sign Up
+          {loading ? "Signing up..." : "Sign Up"}
         </button>
+
         <p className="text-sm text-center text-gray-400 mt-4">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-400 hover:underline">
+          <Link to="/login" className="text-blue-400 hover:underline">
             Login
-          </a>
+          </Link>
         </p>
       </form>
     </div>

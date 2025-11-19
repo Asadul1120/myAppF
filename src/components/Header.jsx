@@ -28,7 +28,7 @@ const Header = () => {
           <img
             src={Logo}
             alt="logo"
-            className="h-16 rounded-full object-cover"
+            className="h-15 rounded-full object-cover"
           />
         </div>
 
@@ -41,9 +41,21 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link to="/about" className="hover:text-blue-400">
+              <a href="#project" className="hover:text-blue-400">
+                Projects
+              </a>
+            </li>
+
+            <li>
+              <a href="#about" className="hover:text-blue-400">
                 About
-              </Link>
+              </a>
+            </li>
+
+            <li>
+              <a href="#contact" className="hover:text-blue-400">
+                Contact
+              </a>
             </li>
 
             {auth.user ? (
@@ -109,13 +121,31 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link
-                to="#about"
+              <a
+                href="#project"
+                onClick={toggleMobileMenu}
+                className="hover:text-blue-400 border-b border-gray-600 block"
+              >
+                Project
+              </a>
+            </li>
+            <li>
+              <a
+                href="#about"
                 onClick={toggleMobileMenu}
                 className="hover:text-blue-400 border-b border-gray-600 block"
               >
                 About
-              </Link>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#contact"
+                onClick={toggleMobileMenu}
+                className="hover:text-blue-400 border-b border-gray-600 block"
+              >
+                Contact
+              </a>
             </li>
 
             {auth.user ? (

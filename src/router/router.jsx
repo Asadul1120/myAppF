@@ -32,7 +32,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/adminchat",
-        element: <AdminChat />,
+        element: (
+          <AdminRoute>
+            <AdminChat />
+          </AdminRoute>
+        ),
       },
       {
         path: "/services/:id",

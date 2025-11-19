@@ -1,6 +1,7 @@
 
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import { toast } from "react-toastify";
 
 function AdminRoute({ children }) {
   const { auth, loading } = useAuth();
@@ -9,7 +10,7 @@ function AdminRoute({ children }) {
 
   if (!auth?.token || auth?.user?.role !== "admin") {
 
- alert("You are not authorized to access this page. Please log in as an admin.");
+    toast.error("You are not authorized to access this page.");
 
     return <Navigate to="/login" />;
 

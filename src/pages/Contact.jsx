@@ -28,15 +28,13 @@ const Contact = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      await fetch(`${import.meta.env.VITE_API_URL}/user/create`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/message/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-
-      console.log("Form Data:", formData);
 
       setFormData({
         name: "",

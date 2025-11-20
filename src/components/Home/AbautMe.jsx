@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Asadul from "../../assets/Asadulfb.png";
 import reactSvg from "../../assets/react.svg";
 
@@ -9,44 +9,81 @@ const AboutMe = () => {
     frontend: [
       "React.js",
       "Next.js",
-      "JavaScript",
+      "JavaScript (ES6+)",
       "TypeScript",
+      "Redux",
+      "Redux Toolkit",
+      "React Query",
       "Tailwind CSS",
+      "Bootstrap",
       "HTML5",
       "CSS3",
+      "Responsive Design",
+      "REST API Integration",
     ],
+
     backend: [
       "Node.js",
       "Express.js",
       "MongoDB",
+      "Mongoose",
       "MySQL",
       "REST APIs",
-      "JWT",
-      "Socket.io",
+      "JWT Authentication",
+      "Socket.io (Real-time)",
+      "Cors & Middleware",
+      "bcrypt & Security",
+      "MVC Architecture",
+      "API Pagination & Filtering",
     ],
+
     tools: [
       "Git & GitHub",
+      "GitHub Actions (CI/CD)",
       "Figma",
       "VS Code",
       "Postman",
+      "Thunder Client",
       "Netlify",
       "Vercel",
       "Render",
+      "MongoDB Atlas",
+      "Firebase",
+      "NPM & Yarn",
+      "Chrome DevTools",
     ],
   };
 
   const experiences = [
     {
-      year: "2023 - Present",
-      title: "Full Stack Developer",
-      type: "Freelance",
-      description: "Building scalable web applications for various clients",
+      title: "MERN Full Stack Developer",
+      description:
+        "I build modern, scalable, and fully functional web applications using the MERN stack. From designing RESTful APIs to developing secure authentication systems, admin dashboards, and real-time features, I focus on creating complete solutions that deliver performance, reliability, and a smooth user experience.",
     },
     {
-      year: "2022 - 2023",
       title: "Frontend Developer",
-      type: "Self-Employed",
-      description: "Creating responsive and interactive user interfaces",
+      description:
+        "I create clean, responsive, and visually engaging interfaces using React.js, Next.js, JavaScript, TypeScript, and Tailwind CSS. My work emphasizes intuitive UX, pixel-perfect layouts, smooth animations, and high-performance front-end design that feels great to use.",
+    },
+    {
+      title: "Backend Developer",
+      description:
+        "I develop robust, secure, and scalable backend systems using Node.js and Express.js. My experience includes designing database schemas, building APIs, implementing authentication with JWT, and integrating real-time communication using Socket.IO. I work confidently with MongoDB, MySQL, and Firebase to deliver optimized backend solutions.",
+    },
+    {
+      title: "Redux & Redux Toolkit Expert",
+      description:
+        "I specialize in managing complex global state with Redux and Redux Toolkit. From slices and reducers to RTK Query and custom middleware, I build predictable and maintainable state architectures that improve performance and keep large-scale applications clean and organized.",
+    },
+    {
+      title: "Tools & DevOps",
+      description:
+        "I utilize Git & GitHub for version control, Figma for UI/UX collaboration, Postman for API testing, and VS Code as my main development environment. I deploy full-stack applications on platforms like Netlify, Vercel, and Render while maintaining smooth and efficient CI/CD workflows.",
+    },
+    {
+      title: "Creative Problem Solver",
+      description:
+        "I enjoy breaking down complex challenges and turning them into simple, efficient, and production-ready solutions. My focus is always on clean code, performance optimization, and delivering digital experiences that truly make an impact.",
     },
   ];
 
@@ -70,8 +107,8 @@ const AboutMe = () => {
           </h1>
           <div className="w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full mb-4"></div>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Passionate developer crafting digital experiences that make a
-            difference
+            Turning ideas into smooth, engaging, and meaningful web experiences
+            with the MERN stack and modern technologies.
           </p>
         </div>
 
@@ -103,14 +140,17 @@ const AboutMe = () => {
           {/* Right - Content */}
           <div className="space-y-8">
             {/* Main Heading */}
+
             <div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4">
-                Turning <span className="text-blue-400">Ideas</span> Into{" "}
-                <span className="text-purple-400">Digital Reality</span>
+                Turning <span className="text-blue-400">Ideas</span> into{" "}
+                <span className="text-purple-400">Real-World Solutions</span>
               </h2>
               <p className="text-xl text-gray-300 leading-relaxed">
-                Full Stack Developer specializing in modern web technologies,
-                creating solutions that are both beautiful and functional.
+                I’m a Full Stack Developer passionate about building modern,
+                scalable web applications. I focus on crafting solutions that
+                are not only visually appealing but also highly functional,
+                seamless, and optimized for real-world impact.
               </p>
             </div>
 
@@ -119,7 +159,7 @@ const AboutMe = () => {
               {[
                 { id: "about", label: "About", icon: "👨‍💻" },
                 { id: "skills", label: "Skills", icon: "🛠️" },
-                { id: "experience", label: "Journey", icon: "🚀" },
+                { id: "experience", label: "Experience", icon: "🚀" },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -146,13 +186,21 @@ const AboutMe = () => {
                       <p className="text-lg text-gray-300 mb-4">
                         Hello! I'm{" "}
                         <strong className="text-blue-400">Asadul Islam</strong>,
-                        a passionate Full Stack Developer with expertise in the
-                        MERN stack and modern web technologies.
+                        a dedicated MERN Full Stack Developer who loves building
+                        modern, scalable, and user-focused web applications. I
+                        specialize in React, Next.js, Node.js, Express.js,
+                        MongoDB, and state management tools like Redux & Redux
+                        Toolkit.
                       </p>
+
                       <p className="text-lg text-gray-300">
-                        I love creating digital experiences that are not only
-                        visually appealing but also highly functional and
-                        user-friendly.
+                        I enjoy crafting digital experiences that are fast,
+                        visually appealing, and highly functional. Whether it’s
+                        creating elegant front-end interfaces, architecting
+                        powerful back-end systems, or building real-time
+                        features, I’m passionate about turning ideas into
+                        meaningful products with clean code and modern
+                        technologies.
                       </p>
                     </div>
                   </div>
@@ -166,7 +214,7 @@ const AboutMe = () => {
                     </div>
                     <div className="text-center p-4 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl border border-purple-500/30">
                       <div className="text-2xl font-bold text-purple-400">
-                        50+
+                        25+
                       </div>
                       <div className="text-sm text-gray-400">Projects</div>
                     </div>
@@ -212,15 +260,10 @@ const AboutMe = () => {
                     >
                       <div className="absolute -left-2 top-0 w-4 h-4 bg-blue-500 rounded-full"></div>
                       <div className="bg-gradient-to-r from-gray-700/50 to-gray-600/30 rounded-2xl p-6 hover:from-gray-700 hover:to-gray-600 transition-all duration-300">
-                        <div className="text-purple-400 font-bold text-sm mb-2">
-                          {exp.year}
-                        </div>
                         <h4 className="text-xl font-bold text-white mb-2">
                           {exp.title}
                         </h4>
-                        <div className="text-blue-400 text-sm font-medium mb-3">
-                          {exp.type}
-                        </div>
+
                         <p className="text-gray-300">{exp.description}</p>
                       </div>
                     </div>
@@ -242,7 +285,7 @@ const AboutMe = () => {
                   Hire Me
                 </button>
                 <a
-                  href="#pro"
+                  href="#project"
                   className="border-2 border-blue-500 hover:bg-blue-500 text-white font-semibold py-3 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105"
                 >
                   View Projects

@@ -1,5 +1,7 @@
 import project from "../../assets/Project1.png";
 import blogs from "../../assets/blogs.png";
+import ecoomerce from "../../assets/e-coma.png";
+import pokamon from "../../assets/pokamon.png";
 
 const Projects = [
   {
@@ -8,17 +10,17 @@ const Projects = [
     link: "https://blognest-six.vercel.app/",
   },
   {
-    title: "The Project E-commerce Website", 
-    image: project,
-    link: "#",
-  },
-   {
-    title: "The Project Food Website with Nice Admin Panel",
-    image: project,
-    link: "#",
+    title: "The Project E-commerce Website",
+    image: ecoomerce,
+    link: "https://asadul1120.github.io/Assignment-2-Bootstrap-e-comm/",
   },
   {
-    title: "The Project E-commerce Website", 
+    title: "The Project Food Website with Nice Admin Panel",
+    image: pokamon,
+    link: "https://assignment-3-react-router-and-api-int.netlify.app/",
+  },
+  {
+    title: "The Project E-commerce Website",
     image: project,
     link: "#",
   },
@@ -32,7 +34,9 @@ const Projects = [
 function OurProjects() {
   return (
     <div id="project" className="bg-gray-900 text-white py-16 px-10">
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">Our Projects</h2>
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
+        Our Projects
+      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {Projects.map((proj, index) => (
           <div
@@ -45,7 +49,10 @@ function OurProjects() {
               className="w-full h-48 object-cover mb-4 rounded-t-xl object-top"
             />
             <div className="flex items-center justify-between p-4">
-              <p className="text-lg text-gray-300 font-medium w-2/3" title={proj.title}>
+              <p
+                className="text-lg text-gray-300 font-medium w-2/3"
+                title={proj.title}
+              >
                 {proj.title}
               </p>
               <a

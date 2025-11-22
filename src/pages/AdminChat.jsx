@@ -29,7 +29,7 @@ const AdminChat = () => {
     return () => {
       socket.current.disconnect();
     };
-  }, []);
+  }, [ ]);
 
   // Fetch users
   useEffect(() => {
@@ -64,7 +64,7 @@ const AdminChat = () => {
     };
 
     fetchMessages();
-  }, [selectedUser]);
+  }, [selectedUser,  messages, socket.current,]);
 
   // Send message
   const handleSend = async () => {

@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 import { useAuth } from "../AuthContext";
@@ -22,7 +21,9 @@ const UserChat = () => {
 
   // socket initialize
   useEffect(() => {
-    socket.current = io(import.meta.env.VITE_API_URL, { transports: ["websocket"] });
+    socket.current = io(import.meta.env.VITE_API_URL, {
+      transports: ["websocket"],
+    });
 
     socket.current.on("receive_message", (msg) => {
       if (msg.userId === userId || msg.sender === "admin") {
@@ -39,7 +40,9 @@ const UserChat = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/userChat/${userId}`);
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/userChat/${userId}`
+        );
         const data = await res.json();
         setMessages(data);
       } catch (error) {
@@ -48,7 +51,7 @@ const UserChat = () => {
     };
 
     fetchMessages();
-  }, [userId]);
+  }, [userId, messages, socket, newMessage]);
 
   // Send message
   const handleSend = async () => {
@@ -80,7 +83,6 @@ const UserChat = () => {
   return (
     <div className="w-full h-screen flex flex-col bg-gray-800 px-3 pt-35 pb-3">
       <div className="flex-1 flex flex-col border bg-gray-900 border-gray-700 rounded-xl shadow-xl overflow-hidden ">
-
         {/* Header */}
         <div className="bg-gray-800 text-white font-semibold text-lg p-4 border-b border-gray-700">
           💬 Chat with Admin
@@ -91,7 +93,9 @@ const UserChat = () => {
           {messages.map((msg) => (
             <div
               key={msg._id || msg.id}
-              className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+              className={`flex ${
+                msg.sender === "user" ? "justify-end" : "justify-start"
+              }`}
             >
               <div
                 className={`px-4 py-2 rounded-xl max-w-xs shadow ${

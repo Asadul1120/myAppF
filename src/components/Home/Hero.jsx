@@ -79,7 +79,7 @@ function Hero() {
   };
 
   return (
-    <section className="bg-gray-900 text-white pt-24" id="home">
+    <section className="bg-gray-900 text-white pt-30" id="home">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Text Content */}

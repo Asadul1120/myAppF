@@ -2,8 +2,14 @@ import project from "../../assets/Project1.png";
 import blogs from "../../assets/blogs.png";
 import ecoomerce from "../../assets/e-coma.png";
 import pokamon from "../../assets/pokamon.png";
+import dblpro from "../../assets/dblpro.png";
 
 const Projects = [
+  {
+    title: "Management System for a Company Using MERN full Stack",
+    image: dblpro,
+    link: "https://sorting-packing-dbl-asadul-deployment.netlify.app/",
+  },
   {
     title: "The Project Blog Website with Nice Admin Panel",
     image: blogs,

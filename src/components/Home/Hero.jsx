@@ -62,7 +62,7 @@ function Hero() {
 
     const timeout = setTimeout(
       handleTyping,
-      isDeleting ? typingConfig.deletingSpeed : typingConfig.typingSpeed
+      isDeleting ? typingConfig.deletingSpeed : typingConfig.typingSpeed,
     );
 
     return () => clearTimeout(timeout);
@@ -136,8 +136,8 @@ function Hero() {
                 Hire Me
               </button>
               <a
-                href={baio}
-                download="Asadul_Islam_CV.pdf"
+                href="#"
+                // download="Asadul_Islam_CV.pdf"
                 className="border-2 border-blue-600 hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 text-center"
               >
                 Download CV
@@ -160,7 +160,7 @@ function Hero() {
                   </div>
                 </a>
               ))}
-            </div> */}
+            </div>  */}
           </div>
 
           {/* Image */}

@@ -28,6 +28,7 @@ const Projects = [
       "Industrial sorting and packing Employee management system with automation features.",
     technology: [
       "Next.js",
+      "Redux Toolkit",
       "Node.js",
       "JWT Authentication",
       "MongoDB",
@@ -50,6 +51,7 @@ const Projects = [
       "Modern blogging platform with authentication, post management and API integration.",
     technology: [
       "Next.js",
+      "Redux Toolkit",
       "Node.js",
       "JWT Authentication",
       "MongoDB",

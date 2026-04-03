@@ -231,8 +231,8 @@ const AboutMe = () => {
                           {category === "frontend"
                             ? "🎨"
                             : category === "backend"
-                            ? "⚙️"
-                            : "🔧"}
+                              ? "⚙️"
+                              : "🔧"}
                         </span>
                         {category}
                       </h3>
@@ -281,9 +281,14 @@ const AboutMe = () => {
                 </span>
               </p>
               <div className="flex justify-center gap-4 mt-4">
-                <button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                <a
+                  href="https://wa.me/message/QGASCI4ZI3Y4H1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
                   Hire Me
-                </button>
+                </a>
                 <a
                   href="#project"
                   className="border-2 border-blue-500 hover:bg-blue-500 text-white font-semibold py-3 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105"

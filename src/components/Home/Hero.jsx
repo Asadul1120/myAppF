@@ -68,15 +68,16 @@ function Hero() {
     return () => clearTimeout(timeout);
   }, [currentCharIndex, isDeleting, currentWordIndex, isPaused, wordGroups]);
 
-  const handleHireMe = () => {
-    // Scroll to contact section or open email
-    const contactSection = document.getElementById("contact");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
-    } else {
-      window.open("mailto:asadul@example.com?subject=Hire%20Request");
-    }
-  };
+  // const handleHireMe = () => {
+  //   // Scroll to contact section or open email
+  //   const contactSection = document.getElementById("contact");
+
+  //   if (contactSection) {
+  //     contactSection.scrollIntoView({ behavior: "smooth" });
+  //   } else {
+  //     window.open("https://wa.me/message/QGASCI4ZI3Y4H1");
+  //   }
+  // };
 
   return (
     <section className="bg-gray-900 text-white pt-30" id="home">
@@ -129,12 +130,14 @@ function Hero() {
 
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center lg:justify-start">
-              <button
-                onClick={handleHireMe}
+              <a
+                href="https://wa.me/message/QGASCI4ZI3Y4H1"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Hire Me
-              </button>
+              </a>
               <a
                 href="#"
                 // download="Asadul_Islam_CV.pdf"

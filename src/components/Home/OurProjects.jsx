@@ -81,7 +81,7 @@ export default function OurProjects() {
     <div id="project" className="bg-gray-900 text-white py-16 px-4 md:px-10">
       {/* Title */}
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-        Our Projects
+        My Projects
       </h2>
 
       {/* Grid */}

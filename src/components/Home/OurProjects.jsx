@@ -4,8 +4,15 @@ import ecoomerce from "../../assets/e-coma.png";
 import pokamon from "../../assets/pokamon.png";
 import dblpro from "../../assets/dblpro.png";
 import BantuWarga from "../../assets/Bantu-Warga.png";
+import goWifid from "../../assets/goWifid.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowUpRightFromSquare,
+  faLock,
+} from "@fortawesome/free-solid-svg-icons";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import carService from "../../assets/carService.png";
+import { useState } from "react";
 
 const Projects = [
   {
@@ -29,6 +36,7 @@ const Projects = [
     technology: [
       "Next.js",
       "Redux Toolkit",
+      "Express.js",
       "Node.js",
       "JWT Authentication",
       "MongoDB",
@@ -36,14 +44,42 @@ const Projects = [
     ],
     image: dblpro,
     link: "https://sorting-packing-dbl-asadul-deployment.netlify.app/",
+    github: "https://github.com/Asadul1120/SortingDBL.git",
+  },
+  {
+    title: "GoWafid",
+    description:
+      "GoWafid is an official online platform that helps users book medical test appointments for GCC visa processing. It allows easy registration, appointment scheduling at approved centers, and tracking of medical status in a simple and secure way.",
+    technology: [
+      "React",
+      "Tailwind",
+      "Mongoose",
+      "Express.js",
+      "Node.js",
+      "JWT Authentication",
+      "MongoDB",
+    ],
+    image: goWifid,
+    link: "https://go-wafid.com",
+  },
+
+  {
+    title: "Car Service",
+    description:
+      "Car service platform with booking and service management features.",
+    technology: ["React", "Redux", "Tailwind CSS", "Fontend-styling"],
+    image: carService,
+    link: "https://car-service-y7c0.onrender.com/",
+    github: "https://github.com/Asadul1120/Car-Service",
   },
   {
     title: "Bantu Warga",
     description:
       "Community health service platform focused on COVID-19 information and support.",
-    technology: ["React", "Tailwind CSS", "CSS"],
+    technology: ["React", "Tailwind CSS", "Fontend-styling"],
     image: BantuWarga,
     link: "https://bantu-wargadev.netlify.app/",
+    github: "https://github.com/Asadul1120/Bantu-Warga.git",
   },
   {
     title: "BlogNest",
@@ -59,6 +95,7 @@ const Projects = [
     ],
     image: blogs,
     link: "https://blognest-six.vercel.app/",
+    github: "https://github.com/shihab-2021/Blog-Client.git",
   },
   {
     title: "E-commerce UI",
@@ -67,6 +104,7 @@ const Projects = [
     technology: ["React", "Bootstrap", "API", "CSS"],
     image: ecoomerce,
     link: "https://asadul1120.github.io/Assignment-2-Bootstrap-e-comm/",
+    github: "https://github.com/Asadul1120/Assignment-2-Bootstrap-e-comm.git",
   },
   {
     title: "Pokemon App",
@@ -75,75 +113,118 @@ const Projects = [
     technology: ["React", "API", "Router", "CSS"],
     image: pokamon,
     link: "https://assignment-3-react-router-and-api-int.netlify.app/",
+    github:
+      "https://github.com/Asadul1120/-Assignment-3-React-Router-and-API-Integration-.git",
   },
 ];
 
 export default function OurProjects() {
+  const [startIndex, setStartIndex] = useState(0);
+  const itemsPerPage = 6;
+
+  const currentProjects = Projects.slice(startIndex, startIndex + itemsPerPage);
+
   return (
-    <div id="project" className="bg-gray-900 text-white py-16 px-4 md:px-10">
+    <div
+      id="project"
+      className="bg-gray-900 text-white py-20 px-4 sm:px-6 lg:px-12"
+    >
       {/* Title */}
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+      <h2 className="text-3xl sm:text-4xl font-bold text-center mb-14 tracking-wide">
         My Projects
       </h2>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-        {Projects.map((proj, index) => (
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
+        {currentProjects.map((proj, index) => (
           <div
             key={index}
-            className="bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:scale-105 transition duration-300"
+            className="group bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col"
           >
             {/* Image */}
             <div className="overflow-hidden">
               <img
                 src={proj.image}
                 alt={proj.title}
-                className="w-full h-48 object-cover object-top hover:scale-110 transition duration-500"
+                className="w-full h-52 object-cover object-top group-hover:scale-110 transition duration-500"
               />
             </div>
 
             {/* Content */}
-            <div className="p-4 flex flex-col gap-3">
+            <div className="p-5 flex flex-col flex-grow">
               {/* Title */}
-              <h3 className="text-lg font-semibold hover:text-indigo-400 transition">
+              <h3 className="text-lg font-semibold mb-2 group-hover:text-indigo-400 transition">
                 {proj.title}
               </h3>
 
               {/* Description */}
-              <p className="text-sm text-gray-400 leading-relaxed line-clamp-2">
+              <p className="text-sm text-gray-400 mb-4 line-clamp-3">
                 {proj.description}
               </p>
 
               {/* Tech Tags */}
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-4">
                 {proj.technology.map((tech, i) => (
                   <span
                     key={i}
-                    className="text-xs bg-indigo-500/20 text-indigo-400 px-3 py-1 rounded-full border border-indigo-500/30 hover:bg-indigo-500 hover:text-white transition"
+                    className="text-xs bg-indigo-500/10 text-indigo-400 px-3 py-1 rounded-full border border-indigo-500/20"
                   >
                     {tech}
                   </span>
                 ))}
               </div>
 
-              {/* Button */}
-              <div className="flex justify-end">
+              {/* Buttons */}
+              <div className="flex justify-between items-center mt-auto gap-3">
+                {proj.github ? (
+                  <a
+                    href={proj.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 text-center inline-flex justify-center items-center gap-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition"
+                  >
+                    Github <FontAwesomeIcon icon={faGithub} />
+                  </a>
+                ) : (
+                  <button
+                    disabled
+                    className="flex-1 inline-flex justify-center items-center gap-2 bg-gray-800 text-gray-500 px-4 py-2 rounded-lg text-sm cursor-not-allowed"
+                  >
+                    Private <FontAwesomeIcon icon={faLock} />
+                  </button>
+                )}
+
                 <a
                   href={proj.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-500 hover:from-indigo-500 hover:to-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition duration-300 shadow-md hover:shadow-xl"
+                  className="flex-1 text-center inline-flex justify-center items-center gap-2 bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-blue-500 hover:to-indigo-500 px-4 py-2 rounded-lg text-sm font-medium transition"
                 >
-                  Live
-                  <FontAwesomeIcon
-                    icon={faArrowUpRightFromSquare}
-                    className="text-xs"
-                  />
+                  Live <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
                 </a>
               </div>
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Navigation (NEW ADD করা হয়েছে শুধু নিচে) */}
+      <div className="flex justify-center gap-4 mt-12">
+        <button
+          onClick={() => setStartIndex((prev) => prev - 1)}
+          disabled={startIndex === 0}
+          className="px-5 py-2 text-xs rounded-lg bg-gray-800 hover:bg-gray-700 disabled:opacity-40"
+        >
+          ⬅ Previous
+        </button>
+
+        <button
+          onClick={() => setStartIndex((prev) => prev + 1)}
+          disabled={startIndex + itemsPerPage >= Projects.length}
+          className="px-5 py-2 text-xs rounded-lg bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40"
+        >
+          Next ➡
+        </button>
       </div>
     </div>
   );
